@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCoreWaveform", "Samples\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiQuadFilterSample", "Samples\BiQuadFilterSample\BiQuadFilterSample.csproj", "{F8733117-DA1D-40DC-AEF8-98051B86E219}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALSample", "Samples\OpenALSample\OpenALSample.csproj", "{EF012C48-546B-4768-892F-1A6E6514A68B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
