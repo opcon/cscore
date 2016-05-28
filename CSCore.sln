@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiQuadFilterSample", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALSample", "Samples\OpenALSample\OpenALSample.csproj", "{EF012C48-546B-4768-892F-1A6E6514A68B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCore.OSX", "CSCore.OSX\CSCore.OSX.csproj", "{BC09FBD9-AAEB-4A4F-965E-1EBE3E880141}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordWithSpecificFormat", "Samples\RecordWithSpecificFormat\RecordWithSpecificFormat.csproj", "{E0198A08-AAA8-4A76-B096-BBE72DA4F93B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertWavToMp3", "Samples\ConvertWavToMp3\ConvertWavToMp3.csproj", "{9CF28420-D689-46E6-B659-72520A515372}"
