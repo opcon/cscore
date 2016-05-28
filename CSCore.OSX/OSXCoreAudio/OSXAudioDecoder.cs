@@ -7,6 +7,10 @@ using System.Diagnostics;
 
 namespace CSCore.OSXCoreAudio
 {
+    /// <summary>
+    ///     The <see cref="OSXAudioDecoder"/> is a generic decoder for all formats 
+    ///     supported by the CoreAudio API on OSX
+    /// </summary>
     public class OSXAudioDecoder : IWaveSource
     {
         private WaveFormat _waveFormat;
@@ -26,6 +30,10 @@ namespace CSCore.OSXCoreAudio
         private bool _disposed = false;
         private object _lockObj = new object();
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="OSXAudioDecoder"/> class.
+        /// </summary>
+        /// <param name="url">URI which points to an audio source which can be decoded.</param>
         public OSXAudioDecoder(string url)
         {
             if (String.IsNullOrEmpty(url))
@@ -35,8 +43,24 @@ namespace CSCore.OSXCoreAudio
 
             //Seek to position 0, which will skip over all header frames if they exist,
             //to the first sample of audio
-            SetPosition(0);        }
+            SetPosition(0);        
+        }
 
+        /// <summary>
+        ///     Reads a sequence of bytes from the <see cref="OSXAudioDecoder"/>  and advances the position
+        ///     within the stream by the number of bytes read
+        /// </summary>
+        /// <param name="buffer">
+        ///     An array of bytes. When this method resturns, the <paramref name="buffer"/> contains the specified
+        ///     byte array with the values between <paramref name="offset"/> and (<paramref name="offset"/> + <paramref name="count"/> - 1)
+        ///     replaced by the bytes read from the current source.
+        /// </param>
+        /// <param name="offset">
+        ///     The zero-based byte offset in the <paramref name="buffer"/> at which to begin storing
+        ///     the data read from the current stream.
+        /// </param>
+        /// <param name="count">The maximum number of bytes to read from the current source.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
         public int Read(byte[] buffer, int offset, int count)
         {
             CheckForDisposed();
@@ -175,7 +199,11 @@ namespace CSCore.OSXCoreAudio
             }
         }
 
-
+        /// <summary>
+        ///     Gets a value which indicates whether the seeking is supported. True means that seeking is supported.
+        ///     False means that seeking is not supported.
+        ///     Currently always returns true, because CoreAudio can always seek (?). Need to double check this is correct.
+        /// </summary>
         public bool CanSeek
         {
             get
@@ -184,11 +212,18 @@ namespace CSCore.OSXCoreAudio
                 return true;
             }
         }
+
+        /// <summary>
+        ///     Gets the format of the decoded audio data provided by the <see cref="Read"/> method. 
+        /// </summary>
         public WaveFormat WaveFormat
         {
             get { return _waveFormat; }
         }
 
+        /// <summary>
+        ///     Gets or sets the position of the output stream, in bytes.
+        /// </summary>
         public long Position
         {
             get { return !_disposed ? _position*_clientFormat.BytesPerFrame : 0; }
@@ -231,6 +266,9 @@ namespace CSCore.OSXCoreAudio
             }
         }
 
+        /// <summary>
+        ///     Gets the total length of the decoded audio, in bytes.
+        /// </summary>
         public long Length
         {
             get
@@ -248,6 +286,13 @@ namespace CSCore.OSXCoreAudio
         }
 
 
+        /// <summary>
+        ///     Disposes the <see cref="OSXAudioDecoder"/> and its internal resources. 
+        /// </summary>
+        /// <param name="disposing">
+        ///     True to release both managed and unmanaged resources;
+        ///     false to release only managed resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             lock (_lockObj)
