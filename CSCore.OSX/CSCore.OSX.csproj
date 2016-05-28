@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BC09FBD9-AAEB-4A4F-965E-1EBE3E880141}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CSCore.Mac</RootNamespace>
-    <AssemblyName>CSCore.Mac</AssemblyName>
+    <RootNamespace>CSCore</RootNamespace>
+    <AssemblyName>CSCore.OSX</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -18,14 +18,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Debug\CSCore.OSX.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Release\CSCore.OSX.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
