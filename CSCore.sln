@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALSample", "Samples\Ope
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCore.OSX", "CSCore.OSX\CSCore.OSX.csproj", "{BC09FBD9-AAEB-4A4F-965E-1EBE3E880141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCore.OSX.Test", "CSCore.OSX.Test\CSCore.OSX.Test.csproj", "{F58C2874-D663-42BD-B406-3526F57868E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
