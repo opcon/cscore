@@ -4,6 +4,7 @@ using MonoMac.AudioToolbox;
 using MonoMac.AudioUnit;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace CSCore.OSXCoreAudio
 {
@@ -16,6 +17,7 @@ namespace CSCore.OSXCoreAudio
         private WaveFormat _waveFormat;
 
         private ExtAudioFile _audioFileReader;
+        private AudioStreamSource _audioStreamSource;
         private AudioBuffers _fillBuffers;
         private IntPtr _audioBufferMemory;
         private AudioStreamBasicDescription _destinationFormat;
@@ -37,13 +39,31 @@ namespace CSCore.OSXCoreAudio
         public OSXAudioDecoder(string url)
         {
             if (String.IsNullOrEmpty(url))
-                throw new ArgumentNullException("url");
+                throw new ArgumentNullException(nameof(url));
 
             _audioFileReader = Initialize(url);
 
             //Seek to position 0, which will skip over all header frames if they exist,
             //to the first sample of audio
             SetPosition(0);        
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="OSXAudioDecoder" /> class.
+        /// </summary>
+        /// <param name="stream">Stream which provides the audio data to decode.</param>
+        public OSXAudioDecoder(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (!stream.CanRead)
+                throw new ArgumentException("Stream is not readable.", nameof(stream));
+
+            _audioFileReader = Initialize(stream);
+
+            //Seek to position 0, which will skip over all header frames if they exist,
+            //to the first sample of audio
+            SetPosition(0);
         }
 
         /// <summary>
@@ -117,18 +137,38 @@ namespace CSCore.OSXCoreAudio
             }
         }
 
+        private ExtAudioFile Initialize(Stream stream)
+        {
+            //Load audio stream source (child of AudioFile)
+            _audioStreamSource = new AudioStreamSource(stream);
+
+            //Wrap AudioStreamSource in extAudioFile object
+            ExtAudioFile extAudioFile;
+            ExtAudioFile.WrapAudioFileID(_audioStreamSource.Handle, false, out extAudioFile);
+
+            //Initialize
+            return Initialize(extAudioFile);
+        }
+
         private ExtAudioFile Initialize(string url)
+        {
+            //Load the audio file
+            ExtAudioFile extAudioFile = ExtAudioFile.OpenUrl(MonoMac.CoreFoundation.CFUrl.FromFile(url));
+
+            //Initialize
+            return Initialize(extAudioFile);
+
+        }
+
+        ExtAudioFile Initialize(ExtAudioFile extAudioFile)
         {
             try
             {
-                //Load the audio file
-                ExtAudioFile extAudioFile = ExtAudioFile.OpenUrl(MonoMac.CoreFoundation.CFUrl.FromFile(url));
-
                 //This is the file input format
                 _inputFormat = extAudioFile.FileDataFormat;
 
                 //Create the destination format - use WAV LPCM, 2 channels, input sample rate
-                _destinationFormat = AudioStreamBasicDescription.CreateLinearPCM(sampleRate:_inputFormat.SampleRate);
+                _destinationFormat = AudioStreamBasicDescription.CreateLinearPCM(sampleRate: _inputFormat.SampleRate);
 
                 //Unset the integer flag and set the float flag
                 //Integer flag is set from the constructor above
@@ -191,7 +231,7 @@ namespace CSCore.OSXCoreAudio
 
                 return extAudioFile;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 DisposeInternal();
 
