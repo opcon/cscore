@@ -19,7 +19,8 @@ namespace CSCore.Codecs.WMA
         {
             get
             {
-                return IsSpeechSupported || IsWmaProfessionalSupported || IsWmaSupported;
+                // First check that MediaFoundationCore is supported, then check WMA specific stuff
+                return MediaFoundationCore.IsSupported && (IsSpeechSupported || IsWmaProfessionalSupported || IsWmaSupported);
             }
         }
 
