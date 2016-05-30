@@ -20,7 +20,7 @@ namespace CSCore.OSXCoreAudio
         ///     Initializes a new instance of the <see cref="T:CSCore.OSXCoreAudio.AudioStreamSource"/> class.
         /// </summary>
         /// <param name="stream">The underlying stream. Note this cannot be a network stream - must be either Memory or File</param>
-        public AudioStreamSource(Stream stream) : base()
+        public AudioStreamSource(Stream stream, AudioFileType fileType) : base()
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
@@ -31,7 +31,7 @@ namespace CSCore.OSXCoreAudio
 
             _audioStream = stream;
 
-            Open(AudioFileType.MP3);
+            Open(fileType);
         }
 
         /// <summary>
