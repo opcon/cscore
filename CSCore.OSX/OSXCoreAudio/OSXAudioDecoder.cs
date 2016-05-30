@@ -5,6 +5,8 @@ using MonoMac.AudioUnit;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+
 
 namespace CSCore.OSXCoreAudio
 {
@@ -35,7 +37,7 @@ namespace CSCore.OSXCoreAudio
         /// <summary>
         ///     Initializes a new instance of the <see cref="OSXAudioDecoder"/> class.
         /// </summary>
-        /// <param name="url">URI which points to an audio source which can be decoded.</param>
+        /// <param name="url">url which points to an audio source which can be decoded.</param>
         public OSXAudioDecoder(string url)
         {
             if (String.IsNullOrEmpty(url))
@@ -49,17 +51,47 @@ namespace CSCore.OSXCoreAudio
         }
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="T:CSCore.OSXCoreAudio.OSXAudioDecoder"/> class.
+        ///     Note that this constructor downloads the entire stream from the URI into a memory stream
+        ///     This is needed for the Core Audio decoder
+        /// </summary>
+        /// <param name="uri">URI which points to an audio source which can be decoded.</param>
+        /// <param name="fileType">The filetype of the audio source</param>
+        public OSXAudioDecoder(Uri uri, AudioFileType fileType = AudioFileType.MP3)
+        {
+            if (String.IsNullOrEmpty(uri.AbsolutePath))
+                throw new ArgumentNullException(nameof(uri));
+
+            //get the stream     
+
+            MemoryStream memoryStream = new MemoryStream();
+            WebRequest req = WebRequest.Create(uri);
+
+            using (Stream rStream = req.GetResponse().GetResponseStream())
+            {
+                rStream.CopyTo(memoryStream);
+            }
+
+            _audioFileReader = Initialize(memoryStream, fileType);
+
+            //Seek to position 0, which will skip over all header frames if they exist,
+            //to the first sample of audio
+            SetPosition(0);
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="OSXAudioDecoder" /> class.
         /// </summary>
         /// <param name="stream">Stream which provides the audio data to decode.</param>
-        public OSXAudioDecoder(Stream stream)
+        /// <param name="fileType">The filetype of the stream. Defaults to MP3</param>
+        public OSXAudioDecoder(Stream stream, AudioFileType fileType = AudioFileType.MP3)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
                 throw new ArgumentException("Stream is not readable.", nameof(stream));
 
-            _audioFileReader = Initialize(stream);
+            _audioFileReader = Initialize(stream, fileType);
 
             //Seek to position 0, which will skip over all header frames if they exist,
             //to the first sample of audio
@@ -137,10 +169,10 @@ namespace CSCore.OSXCoreAudio
             }
         }
 
-        private ExtAudioFile Initialize(Stream stream)
+        private ExtAudioFile Initialize(Stream stream, AudioFileType fileType)
         {
             //Load audio stream source (child of AudioFile)
-            _audioStreamSource = new AudioStreamSource(stream);
+            _audioStreamSource = new AudioStreamSource(stream, fileType);
 
             //Wrap AudioStreamSource in extAudioFile object
             ExtAudioFile extAudioFile;
