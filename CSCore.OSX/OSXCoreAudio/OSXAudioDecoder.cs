@@ -247,6 +247,10 @@ namespace CSCore.OSXCoreAudio
                 {
                 }
 
+                Debug.WriteLine("Initial audio file position is: " + extAudioFile.FileTell());
+                Debug.WriteLine("Header frames are: " + _headerFrames);
+
+
                 //create audio buffers
                 _fillBuffers = new AudioBuffers(1);
 
@@ -332,6 +336,9 @@ namespace CSCore.OSXCoreAudio
                     long seek = position / _clientFormat.BytesPerFrame; // shouldn't need to do any error checking on this division
 
                     _audioFileReader.Seek(seek+_headerFrames);
+                    var new_pos = _audioFileReader.FileTell();
+                    if (new_pos + _headerFrames != seek)
+                        throw new Exception("Setting OSXAudioDecoder position failed!");
 
                     _position = seek;
                 }
