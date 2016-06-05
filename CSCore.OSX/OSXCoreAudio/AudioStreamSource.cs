@@ -12,6 +12,7 @@ namespace CSCore.OSXCoreAudio
     public class AudioStreamSource : AudioSource
     {
         private Stream _audioStream;
+        private bool _disposed = false;
 
         //begin with 8kb buffer
         private byte[] _byteBuffer = new byte[8 * 1024];
@@ -42,12 +43,13 @@ namespace CSCore.OSXCoreAudio
         {
             get
             {
-                return _audioStream.Length;
+                return _disposed ? 0 : _audioStream.Length;
             }
 
             set
             {
-                _audioStream.SetLength(value);
+                if (!_disposed)
+                    _audioStream.SetLength(value);
             }
         }
 
@@ -93,6 +95,21 @@ namespace CSCore.OSXCoreAudio
         public override bool Write(long position, int requestCount, IntPtr buffer, out int actualCount)
         {
             throw new NotSupportedException();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_audioStream != null)
+            {
+                _audioStream.Dispose();
+                _audioStream = null;
+            }
+            _disposed = true;
+            try
+            {
+                base.Dispose(disposing);
+            }
+            catch {}
         }
     }
 }

@@ -380,6 +380,12 @@ namespace CSCore.OSXCoreAudio
                 _audioFileReader.Dispose();
                 _audioFileReader = null;
             }
+            if (_audioStreamSource != null)
+            {
+                if (_audioStreamSource.AudioStream != null)
+                    _audioStreamSource.AudioStream.Dispose();
+                _audioStreamSource = null;
+            }
             if (_fillBuffers != null)
             {
                 for (int i = 0; i < _fillBuffers.Count; i++)
