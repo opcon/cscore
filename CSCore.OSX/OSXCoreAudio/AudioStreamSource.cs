@@ -14,6 +14,8 @@ namespace CSCore.OSXCoreAudio
         private Stream _audioStream;
         private bool _disposed = false;
 
+        public Stream AudioStream {get {return _audioStream;}}
+
         //begin with 8kb buffer
         private byte[] _byteBuffer = new byte[8 * 1024];
 
