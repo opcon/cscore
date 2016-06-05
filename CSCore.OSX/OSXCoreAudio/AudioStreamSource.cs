@@ -72,6 +72,9 @@ namespace CSCore.OSXCoreAudio
                 //seek to the correct position in the stream
                 _audioStream.Position = position;
 
+                if (_audioStream.Position != position)
+                    throw new Exception("Seeking to new position in AudioStreamSource failed!");
+
                 //automatically grow byte buffer if it's not large enough
                 //hopefully don't have to worry about it getting too large
                 if (_byteBuffer.Length < actualCount) _byteBuffer = new byte[actualCount];
