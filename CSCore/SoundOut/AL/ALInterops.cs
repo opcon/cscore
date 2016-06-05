@@ -69,6 +69,9 @@ namespace CSCore.SoundOut.AL
         internal static extern void alSourceStop(uint sourceId);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void alSourceRewind(uint sourceId);
+
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void alSourceQueueBuffers(uint sourceId, int number, uint[] bufferIDs);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
