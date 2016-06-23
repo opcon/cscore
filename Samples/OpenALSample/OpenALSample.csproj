@@ -18,6 +18,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -26,19 +27,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="CSCore.OSX" Condition=" '$(OS)' == 'Unix' ">
+      <HintPath>..\..\CSCore.OSX\bin\merged-output\Release\CSCore.OSX.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\CSCore\CSCore.csproj">
       <Project>{C3DCCFE3-DD3F-4EEE-849B-33E355B1E064}</Project>
       <Name>CSCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
