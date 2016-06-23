@@ -66,4 +66,13 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <PropertyGroup Condition=" '$(OS)' == 'Unix' ">
+	<CustomCommands>
+	  <CustomCommands>
+	    <Command type="AfterBuild" command="monolinker -c skip -b true -l none -p link MonoMac -p skip CSCore -o ../linked-output/${ProjectConfig} -a CSCore.OSX.dll" workingdir="${TargetDir}" />
+	    <Command type="AfterBuild" command="mono ${SolutionDir}/packages/ILRepack.2.0.10/tools/ILRepack.exe /out:../../merged-output/${ProjectConfig}/${TargetName} ${TargetFile} MonoMac.dll" workingdir="${TargetDir}/../linked-output/${ProjectConfig}" />
+	    <Command type="AfterBuild" command="cp ${TargetDir}/CSCore.OSX.xml ${TargetDir}/../merged-output/${ProjectConfig}/" />
+	  </CustomCommands>
+	</CustomCommands>
+  </PropertyGroup>
 </Project>
