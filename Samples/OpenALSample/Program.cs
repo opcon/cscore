@@ -4,6 +4,7 @@ using CSCore.SoundOut;
 using CSCore.Codecs.WAV;
 using System.Threading;
 using System.Linq;
+using CSCore.OSXCoreAudio;
 
 namespace OpenALSample
 {
@@ -21,7 +22,10 @@ namespace OpenALSample
 				path = Console.ReadLine();
 			}
 
-			_waveSource = new WaveFileReader (path);
+            if (CSCore.Utils.PlatformDetection.RunningPlatform() == CSCore.Utils.Platform.MacOSX)
+                OSXAudio.RegisterCodecs();
+
+            _waveSource = CSCore.Codecs.CodecFactory.Instance.GetCodec(path);
 			_soundOut = new ALSoundOut ();
 			_soundOut.Initialize (_waveSource);
 
