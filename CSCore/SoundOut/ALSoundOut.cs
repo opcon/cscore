@@ -130,8 +130,10 @@ namespace CSCore.SoundOut
 
         public void Initialize(IWaveSource source)
         {
-            WaveSource = source;
-            _volumeSource = new VolumeSource(source.ToSampleSource());
+            if (source == null)
+                throw new ArgumentNullException("source");
+
+            source = new InterruptDisposingChainSource(source);
 
             if (_alPlayback != null)
             {
@@ -159,7 +161,11 @@ namespace CSCore.SoundOut
                     bitDepth = maxBitDepth;
                     break;
             }
-            _alPlayback.Initialize(_volumeSource.ToWaveSource(bitDepth), source.WaveFormat, Latency);
+
+            _volumeSource = new VolumeSource(source.ToSampleSource());
+            WaveSource = _volumeSource.ToWaveSource(bitDepth);
+
+            _alPlayback.Initialize(WaveSource, Latency);
         }
 
         private void PlaybackChanged(object sender, EventArgs eventArgs)
@@ -206,6 +212,17 @@ namespace CSCore.SoundOut
                 {
                     _alPlayback.Dispose();
                 }
+            }
+        }
+
+        private class InterruptDisposingChainSource : WaveAggregatorBase
+        {
+            public InterruptDisposingChainSource(IWaveSource source)
+                : base(source)
+            {
+                if (source == null)
+                    throw new ArgumentNullException("source");
+                DisposeBaseSource = false;
             }
         }
     }
