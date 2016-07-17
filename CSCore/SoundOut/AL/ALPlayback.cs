@@ -76,6 +76,7 @@ namespace CSCore.SoundOut.AL
         /// <param name="latency">The latency</param>
         public void Initialize(IWaveSource stream, WaveFormat format, int latency = 50)
         {
+            var format = stream.WaveFormat;   
             _playbackStream = stream;
 			_waveFormat = stream.WaveFormat;
             Latency = latency;
