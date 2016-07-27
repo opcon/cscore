@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordWithSpecificFormat", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertWavToMp3", "Samples\ConvertWavToMp3\ConvertWavToMp3.csproj", "{9CF28420-D689-46E6-B659-72520A515372}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALMultiContext", "Samples\OpenALMultiContext\OpenALMultiContext.csproj", "{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -286,6 +288,16 @@ Global
 		{9CF28420-D689-46E6-B659-72520A515372}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9CF28420-D689-46E6-B659-72520A515372}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9CF28420-D689-46E6-B659-72520A515372}.Release|Win32.ActiveCfg = Release|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9C5B4994-70C3-489D-933C-E2049C0505DB} = {1F24CB15-2CD3-432A-BE46-65CCE8A9DCF3}
@@ -307,6 +319,7 @@ Global
 		{EF012C48-546B-4768-892F-1A6E6514A68B} = {41D1D336-13B2-488B-8A85-C0F744035F8B}
 		{E0198A08-AAA8-4A76-B096-BBE72DA4F93B} = {41D1D336-13B2-488B-8A85-C0F744035F8B}
 		{9CF28420-D689-46E6-B659-72520A515372} = {41D1D336-13B2-488B-8A85-C0F744035F8B}
+		{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4} = {41D1D336-13B2-488B-8A85-C0F744035F8B}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
