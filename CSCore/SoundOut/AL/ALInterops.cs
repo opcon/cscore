@@ -38,14 +38,14 @@ namespace CSCore.SoundOut.AL
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcOpenDevice(string deviceName);
 
-        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr alcCloseDevice(IntPtr handle);
+        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool alcCloseDevice(IntPtr handle);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcCreateContext(IntPtr device, IntPtr attrlist);
 
-        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void alcMakeContextCurrent(IntPtr context);
+        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool alcMakeContextCurrent(IntPtr context);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcGetContextsDevice(IntPtr context);

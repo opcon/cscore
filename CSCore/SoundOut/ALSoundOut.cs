@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -352,10 +353,31 @@ namespace CSCore.SoundOut
 
         private void PlaybackProc(object args)
         {
+            Debug.WriteLine("Start Source" + _alSource.Id);
+
             Exception exception = null;
             EventWaitHandle waitHandle = args as EventWaitHandle;
             IList<BufferedAudioData> byteBuffers;
-            if ((byteBuffers = GetBufferedData(_buffers.Length)).Count <= 0)
+            uint[] unqueuedBuffers;
+
+            using (Context.LockContext())
+            {
+                //if we run eof, and we did not call initialize, the buffers are still queued
+                //make sure the buffers are unququed before trying to fill them
+                if (_alSource.BuffersQueued == 0 && _alSource.BuffersProcessed == 0)
+                {
+                    unqueuedBuffers = _buffers;
+                }
+                else
+                {
+                    while ((unqueuedBuffers = _alSource.UnqueueBuffers(_alSource.BuffersProcessed)).Length <= 0)
+                    {
+                        Thread.Sleep(Latency / 5);
+                    }
+                }
+            }
+
+            if ((byteBuffers = GetBufferedData(unqueuedBuffers.Length)).Count <= 0)
             {
                 _playbackState = PlaybackState.Stopped;
             }
@@ -363,7 +385,8 @@ namespace CSCore.SoundOut
             {
                 using (Context.LockContext())
                 {
-                    FillBuffers(_buffers, byteBuffers);
+
+                    FillBuffers(unqueuedBuffers, byteBuffers);
                     _alSource.Play();
 
                     _playbackState = PlaybackState.Playing;
@@ -401,7 +424,7 @@ namespace CSCore.SoundOut
                     {
                         using (Context.LockContext())
                         {
-                            var unqueuedBuffers = _alSource.UnqueueBuffers(numberOfProcessedBuffers);
+                            unqueuedBuffers = _alSource.UnqueueBuffers(numberOfProcessedBuffers);
                             FillBuffers(unqueuedBuffers, byteBuffers);
 
                             //locks and unlocks context!
@@ -427,6 +450,11 @@ namespace CSCore.SoundOut
             }
         }
 
+        private void PrepareForPlayback()
+        {
+            _alSource.UnqueueBuffers(_alSource.BuffersProcessed);
+        }
+
         private void RaiseStopped(Exception exception)
         {
             EventHandler<PlaybackStoppedEventArgs> handler = Stopped;
@@ -447,8 +475,14 @@ namespace CSCore.SoundOut
                 _alSource = new ALSource(Context);
 
                 _buffers = new uint[NumberOfBuffers];
-                ALInterops.alGenBuffers(_buffers.Length, _buffers);
-                //todo: error handling
+                ALException.Try(
+                    () =>
+                        ALInterops.alGenBuffers(_buffers.Length, _buffers),
+                    "alGenBuffers");
+                foreach (var buffer in _buffers)
+                {
+                    Debug.WriteLine("Created:" + buffer);
+                }
             }
             _bufferSize = (int)_source.WaveFormat.MillisecondsToBytes(_latency);
         }
@@ -468,10 +502,19 @@ namespace CSCore.SoundOut
                         Debug.WriteLine(0.01);
                         //sometimes there are duplicates on window??
                         var finishedBuffers = _alSource.UnqueueBuffers(numberOfProcessedBuffers).Distinct().ToArray();
-                        Debug.WriteLine(0.001);
-                        Debug.WriteLine(numberOfProcessedBuffers + "|" + finishedBuffers.Count(x => x != 0));
-                        ALInterops.alDeleteBuffers(finishedBuffers.Length, finishedBuffers);
-                        Debug.WriteLine(0.02);
+                        int buffersQueued = -1;
+                        ALInterops.alGetSourcei(_alSource.Id, ALSourceParameters.BuffersQueued, out buffersQueued);
+                        Debug.WriteLine(buffersQueued + "|" + numberOfProcessedBuffers);
+                        Debug.WriteLine("Del Source:" + _alSource.Id);
+                        ALException.Try(
+                            () =>
+                                ALInterops.alDeleteBuffers(finishedBuffers.Length, finishedBuffers),
+                            "alDeleteBuffers");
+
+                        foreach (var finishedBuffer in finishedBuffers)
+                        {
+                            Debug.WriteLine("Deleted:" + finishedBuffer);
+                        }
                     }
 
                     _alSource.Dispose();
@@ -488,14 +531,6 @@ namespace CSCore.SoundOut
             }
 
             _isInitialized = false;
-        }
-
-        private void FillBuffers(uint[] buffers, IList<BufferedAudioData> audioData)
-        {
-            for (int i = 0; i < buffers.Length; i++)
-            {
-                FillBuffer(buffers[i], audioData[i].Data, audioData[i].Length);
-            }
         }
 
         private IList<BufferedAudioData> GetBufferedData(int numberOfBuffers)
@@ -520,12 +555,23 @@ namespace CSCore.SoundOut
             return byteBuffers;
         }
 
+        private void FillBuffers(uint[] buffers, IList<BufferedAudioData> audioData)
+        {
+            for (int i = 0; i < buffers.Length; i++)
+            {
+                FillBuffer(buffers[i], audioData[i].Data, audioData[i].Length);
+            }
+        }
+
         private void FillBuffer(uint bufferHandle, byte[] buffer, int count)
         {
             using (Context.LockContext())
             {
-                ALInterops.alBufferData(bufferHandle, _playbackFormat, buffer, count,
-                    (uint)_source.WaveFormat.SampleRate);
+                ALException.Try(
+                    () =>
+                        ALInterops.alBufferData(bufferHandle, _playbackFormat, buffer, count,
+                            (uint) _source.WaveFormat.SampleRate),
+                    "alBufferData");
                 _alSource.QueueBuffer(bufferHandle);
             }
         }
@@ -620,7 +666,7 @@ namespace CSCore.SoundOut
         private void CheckForDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException("WasapiOut");
+                throw new ObjectDisposedException("ALSoundOut");
         }
 
         private void CheckForIsInitialized()
