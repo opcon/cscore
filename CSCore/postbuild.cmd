@@ -1,5 +1,4 @@
 setlocal ENABLEDELAYEDEXPANSION
-chcp 65001
 
 set errorCode=0
 
@@ -14,43 +13,43 @@ set inlineILCompiler=%solutiondir%Tools\InlineILCompiler\InlineILCompiler\bin\%c
 set cscli=%solutiondir%Tools\CSCli\bin\%configname%\CSCli.exe
 
 IF exist "%sdk%\." (
-echo ✔ The Microsoft Windows SDK was found.
+echo The Microsoft Windows SDK was found.
 ) else (
-echo ✘ The Microsoft Windows SDK Dir was not found. Check the following path: "%sdk%"
+echo The Microsoft Windows SDK Dir was not found. Check the following path: "%sdk%"
 goto EXIT_ERR
 )
 IF exist "%framework%\." (
-echo ✔ The .NET Framework Dir was found.
+echo The .NET Framework Dir was found.
 ) else (
-echo ✘ The Framework-Dir was not found. Check the following path: "%framework%"
+echo The Framework-Dir was not found. Check the following path: "%framework%"
 goto EXIT_ERR
 )
 IF exist "%inlineILCompiler%" (
-echo ✔ Found the inline-il-compiler.
+echo Found the inline-il-compiler.
 ) else (
-echo ✘ The inline-il-compiler was not found. Check the following path: "%inlineILCompiler%"
+echo The inline-il-compiler was not found. Check the following path: "%inlineILCompiler%"
 goto EXIT_ERR
 )
 IF exist "%cscli%" (
-echo ✔ Found the cscli-compiler.
+echo Found the cscli-compiler.
 ) else (
-echo ✘ The cscli was not found. Check the following path: "%cscli%"
+echo The cscli was not found. Check the following path: "%cscli%"
 goto EXIT_ERR
 )
 
 if %configname% == Debug (
 echo Build-Configuration: DEBUG
-echo    ✔ DEBUG=IMPL
-echo    ✘ OPTIMIZE
+echo    DEBUG=IMPL
+echo    OPTIMIZE
 set ilasm_args=/DLL /DEBUG=IMPL
 ) else (
 if %configname% == Release (
 echo Build-Configuration: RELEASE
-echo    ✘ DEBUG
-echo    ✔ OPTIMIZE
+echo    DEBUG
+echo    OPTIMIZE
 set ilasm_args=/DLL /OPTIMIZE
 ) else (
-echo ✘ Invalid Configuration.
+echo Invalid Configuration.
 goto EXIT_ERR
 )
 )
