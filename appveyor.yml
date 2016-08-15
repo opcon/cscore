@@ -11,7 +11,6 @@ configuration:
 before_build:
   - cmd: nuget restore
 build:
-  project: CSCore.OSX\CSCore.OSX.csproj
   parallel: true
   verbosity: minimal
 after_build:
