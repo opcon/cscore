@@ -1,0 +1,15 @@
+version: 1.1.{build}-appveyor
+image: Visual Studio 2015
+configuration:
+- Debug
+- Release
+before_build:
+  - cmd: nuget restore
+build:
+  parallel: true
+  verbosity: minimal
+after_build:
+  - cmd: nuget pack CSCore\CSCore.csproj -Prop Configuration=%CONFIGURATION -Symbols
+  - cmd: nuget pack CSCore.OSX\CSCore.OSX.csproj -Prop Configuration=%CONFIGURATION -Symbols -IncludeReferencedProjects
+artifacts:
+  - path: '**\*CSCore*.nupkg'
