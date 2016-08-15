@@ -1,10 +1,8 @@
 ﻿using System;
 using CSCore;
 using CSCore.SoundOut;
-using CSCore.Codecs.WAV;
 using System.Threading;
 using System.Linq;
-using CSCore.OSXCoreAudio;
 
 namespace OpenALSample
 {
@@ -22,14 +20,11 @@ namespace OpenALSample
 				path = Console.ReadLine();
 			}
 
-            if (CSCore.Utils.PlatformDetection.RunningPlatform() == CSCore.Utils.Platform.MacOSX)
-                OSXAudio.RegisterCodecs();
-
             _waveSource = CSCore.Codecs.CodecFactory.Instance.GetCodec(path);
-			_soundOut = new ALSoundOut ();
-			_soundOut.Initialize (_waveSource);
+			_soundOut = new ALSoundOut();
+			_soundOut.Initialize(_waveSource);
 
-			_soundOut.Play ();
+			_soundOut.Play();
 
 			while (true)
 			{
@@ -40,20 +35,18 @@ namespace OpenALSample
 						break;
 				}
 
-				var str = String.Format (@"{0:mm\:ss\.f}/{1:mm\:ss\.f}",
-					          TimeConverterFactory.Instance.GetTimeConverterForSource (_waveSource)
-					.ToTimeSpan (_waveSource.WaveFormat, _waveSource.Position),
-					          TimeConverterFactory.Instance.GetTimeConverterForSource (_waveSource)
-					.ToTimeSpan (_waveSource.WaveFormat, _waveSource.Length));
-				str += String.Concat (Enumerable.Repeat (" ", Console.BufferWidth - 1 - str.Length));
+                var str = string.Format(@"{0:mm\:ss\.f}/{1:mm\:ss\.f}",
+                                _waveSource.GetPosition(),
+                                _waveSource.GetLength());
+				str += string.Concat (Enumerable.Repeat (" ", Console.BufferWidth - 1 - str.Length));
 				Console.SetCursorPosition (0, Console.CursorTop);
 				Console.Write (str);
 				Thread.Sleep (100);
 			}
-			_soundOut.Stop ();
-			_soundOut.Dispose ();
-			_waveSource.Dispose ();
-			CSCore.SoundOut.AL.ALDevice.DefaultDevice.Dispose ();
+			_soundOut.Stop();
+			_soundOut.Dispose();
+			_waveSource.Dispose();
+			CSCore.SoundOut.AL.ALDevice.DefaultDevice.Dispose();
 		}
 	}
 }

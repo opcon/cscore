@@ -1,10 +1,11 @@
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+// ReSharper disable InconsistentNaming
 
 namespace CSCore.SoundOut.AL
 {
+    [CLSCompliant(false)]
     internal class ALInterops
     {
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -39,13 +40,13 @@ namespace CSCore.SoundOut.AL
         internal static extern IntPtr alcOpenDevice(string deviceName);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr alcCloseDevice(IntPtr handle);
+        internal static extern bool alcCloseDevice(IntPtr handle);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcCreateContext(IntPtr device, IntPtr attrlist);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void alcMakeContextCurrent(IntPtr context);
+        internal static extern bool alcMakeContextCurrent(IntPtr context);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcGetContextsDevice(IntPtr context);
@@ -101,7 +102,7 @@ namespace CSCore.SoundOut.AL
             float val3);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void alSourcei(uint sourceId, ALSourceParameters param, float val1);
+        internal static extern void alSourcei(uint sourceId, ALSourceParameters param, int val1);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void alGenBuffers(int count, uint[] bufferIDs);
@@ -174,7 +175,7 @@ namespace CSCore.SoundOut.AL
                     lastNull = true;
 
                     strings.Add(Marshal.PtrToStringAnsi(location, i));
-                    location = new IntPtr((long) location + i + 1);
+                    location = new IntPtr((long)location + i + 1);
                     i = -1;
                 }
                 else
@@ -190,7 +191,7 @@ namespace CSCore.SoundOut.AL
                 ? alcIsExtensionPresent(IntPtr.Zero, extension)
                 : alIsExtensionPresent(extension);
 
-            return (result == 1);
+            return result == 1;
         }
 
         internal static bool IsSupported()
