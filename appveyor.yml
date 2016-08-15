@@ -1,11 +1,17 @@
 version: 1.1.{build}-appveyor
 image: Visual Studio 2015
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
 configuration:
 - Debug
 - Release
 before_build:
   - cmd: nuget restore
 build:
+  project: CSCore.OSX\CSCore.OSX.csproj
   parallel: true
   verbosity: minimal
 after_build:
