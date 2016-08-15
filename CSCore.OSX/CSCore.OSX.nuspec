@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CSCore.OSX</id>
+    <version>1.0.0</version>
+    <authors>cscore</authors>
+    <owners>cscore</owners>
+    <description>CSCore OSX</description>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="CSCore" version="1.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin/Release/CSCore.OSX.*" target="lib" />
+    <file src="bin/Release/CSCore.OSX.xml" target="lib" />
+  </files>
+</package>
