@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("CSCore.OSX")]
 [assembly: AssemblyDescription(".NET Sound Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CSCore")]
 [assembly: AssemblyProduct("CSCore")]
 [assembly: AssemblyCopyright("Patrick Y. and Florian R.")]
 [assembly: AssemblyTrademark("")]

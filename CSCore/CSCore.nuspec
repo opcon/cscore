@@ -4,9 +4,10 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
+    <authors>Florian R.</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/opcon/cscore</projectUrl>
+    <licenseUrl>https://github.com/filoe/cscore/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/filoe/cscore</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2016</copyright>
