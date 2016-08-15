@@ -31,9 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="CSCore.OSX" Condition=" '$(OS)' == 'Unix' ">
-      <HintPath>..\..\CSCore.OSX\bin\merged-output\Release\CSCore.OSX.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -43,6 +40,10 @@
     <ProjectReference Include="..\..\CSCore\CSCore.csproj">
       <Project>{C3DCCFE3-DD3F-4EEE-849B-33E355B1E064}</Project>
       <Name>CSCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSCore.OSX\CSCore.OSX.csproj">
+      <Project>{BC09FBD9-AAEB-4A4F-965E-1EBE3E880141}</Project>
+      <Name>CSCore.OSX</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
