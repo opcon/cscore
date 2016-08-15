@@ -7,6 +7,11 @@ set project=%2
 set solutiondir=%3
 set configname=%4
 
+echo %target%
+echo %project%
+echo %solutiondir%
+echo %configname%
+
 set sdk=%PROGRAMFILES(x86)%\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools
 set framework=%WINDIR%\Microsoft.NET\Framework\v2.0.50727
 set inlineILCompiler=%solutiondir%Tools\InlineILCompiler\InlineILCompiler\bin\%configname%\InlineILCompiler.exe
