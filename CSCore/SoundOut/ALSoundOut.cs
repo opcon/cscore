@@ -320,18 +320,15 @@ namespace CSCore.SoundOut
 
                 //wait for the playbackthread to finish
                 _playbackThread.WaitForExit();
-                Debug.WriteLine(0.1);
                 //after the playbackthread finished, release the resources 
                 CleanupResources();
                 //start creating new resources including new context and so on.
                 _playingDevice = Device;
-                Debug.WriteLine(0.2);
                 _context = new ALContext(_playingDevice);
 
                 source = new InterruptDisposingChainSource(source);
                 _volumeSource = new VolumeSource(source.ToSampleSource());
 
-                Debug.WriteLine(0.3);
                 int numberOfBitsPerSample = FindBestBitDepth(source.WaveFormat);
                 _source = _volumeSource.ToWaveSource(numberOfBitsPerSample);
 
