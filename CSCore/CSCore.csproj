@@ -621,7 +621,7 @@
   <PropertyGroup>
     <PostBuildEvent>
       @echo off 
-      SETLOCAL ENABLEDELAYEDEXPANSION
+      setlocal ENABLEDELAYEDEXPANSION
       chcp 65001
 
       set errorCode=0
