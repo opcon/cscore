@@ -620,7 +620,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      @echo off 
+      @echo off
       setlocal ENABLEDELAYEDEXPANSION
       chcp 65001
 
