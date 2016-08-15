@@ -18,3 +18,4 @@ after_build:
   - cmd: nuget pack CSCore.OSX\CSCore.OSX.csproj -Prop Configuration=%CONFIGURATION% -Symbols -IncludeReferencedProjects
 artifacts:
   - path: '**\*CSCore*.nupkg'
+test: off
