@@ -13,6 +13,8 @@
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
+      <file src="CSCore.props" target="build" />
       <file src="CSCore.dll.config" target="lib/net40" />
+      <file src="CSCore.dll.config" target="content" />
   </files>
 </package>
