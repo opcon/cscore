@@ -39,13 +39,13 @@ namespace CSCore.SoundOut.AL
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcOpenDevice(string deviceName);
 
-        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool alcCloseDevice(IntPtr handle);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr alcCreateContext(IntPtr device, IntPtr attrlist);
 
-        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool alcMakeContextCurrent(IntPtr context);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -91,9 +91,7 @@ namespace CSCore.SoundOut.AL
         internal static extern void alGetSource3f(uint sourceId, ALSourceParameters param, out float val1,
             out float val2, out float val3);
 
-
-
-        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void alSourcef(uint sourceId, ALSourceParameters param, float value);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -103,12 +101,10 @@ namespace CSCore.SoundOut.AL
         internal static extern void alSource3f(uint sourceId, ALSourceParameters param, float val1, float val2,
             float val3);
 
-        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void alSourcei(uint sourceId, ALSourceParameters param, int val1);
 
-
-
-        [DllImport("OpenAL32.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void alGenBuffers(int count, uint[] bufferIDs);
 
         [DllImport("openal32.dll", CallingConvention = CallingConvention.Cdecl)]
