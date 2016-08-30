@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCore.OSX", "CSCore.OSX\CS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordWithSpecificFormat", "Samples\RecordWithSpecificFormat\RecordWithSpecificFormat.csproj", "{E0198A08-AAA8-4A76-B096-BBE72DA4F93B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertWavToMp3", "Samples\ConvertWavToMp3\ConvertWavToMp3.csproj", "{9CF28420-D689-46E6-B659-72520A515372}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALMultiContext", "Samples\OpenALMultiContext\OpenALMultiContext.csproj", "{7D28F77E-FEA0-418A-9F5B-966FBBE44BA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayInputDeviceSample", "Samples\PlayInputDeviceSample\PlayInputDeviceSample.csproj", "{571AC77A-7D3D-44CF-B0E7-08DF03D7B638}"
 EndProject
