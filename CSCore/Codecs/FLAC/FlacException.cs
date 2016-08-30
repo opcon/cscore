@@ -17,7 +17,7 @@ namespace CSCore.Codecs.FLAC
         {
             get
             {
-                return Data["Layer"] as FlacLayer;
+                return (FlacLayer)Data["Layer"];
             }
         }
 
