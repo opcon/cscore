@@ -27,12 +27,24 @@ namespace CSCore.Win32
         /// <summary>
         /// Name of the Cominterface which caused the error.
         /// </summary>
-        public string InterfaceName { get; private set; }
+        public string InterfaceName
+        {
+            get
+            {
+                return Data["InterfaceName"] as string;
+            }
+        }
 
         /// <summary>
         /// Name of the member of the Cominterface which caused the error.
         /// </summary>
-        public string Member { get; private set; }
+        public string Member
+        {
+            get
+            {
+                return Data["Member"] as string;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Win32ComException"/> class.
@@ -43,8 +55,8 @@ namespace CSCore.Win32
         public Win32ComException(int result, string interfaceName, string member)
             : base(GetErrorMessage(result, interfaceName, member), result)
         {
-            InterfaceName = interfaceName;
-            Member = member;
+            Data.Add("InterfaceName", interfaceName);
+            Data.Add("Member", member);
         }
 
         /// <summary>
@@ -57,8 +69,8 @@ namespace CSCore.Win32
         {
             if (info == null)
                 throw new ArgumentNullException("info");
-            InterfaceName = info.GetString("InterfaceName");
-            Member = info.GetString("Member");
+            Data.Add("InterfaceName", info.GetString("InterfaceName"));
+            Data.Add("Member", info.GetString("Member"));
         }
 
         private static string GetErrorMessage(int result, string interfaceName, string member)

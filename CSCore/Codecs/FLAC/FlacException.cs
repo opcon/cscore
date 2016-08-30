@@ -13,7 +13,13 @@ namespace CSCore.Codecs.FLAC
         /// Gets the layer of the flac stream the exception got thrown.
         /// </summary>
         /// <remarks>Used for debugging purposes.</remarks>
-        public FlacLayer Layer { get; private set; }
+        public FlacLayer Layer
+        {
+            get
+            {
+                return Data["Layer"] as FlacLayer;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlacException"/> class.
@@ -23,7 +29,7 @@ namespace CSCore.Codecs.FLAC
         public FlacException(string message, FlacLayer layer)
             : base(message)
         {
-            Layer = layer;
+            Data.Add("Layer", layer);
         }
 
         /// <summary>
@@ -34,7 +40,7 @@ namespace CSCore.Codecs.FLAC
         public FlacException(Exception innerException, FlacLayer layer)
             : base("See InnerException for more details.", innerException)
         {
-            Layer = layer;
+            Data.Add("Layer", layer);
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace CSCore.Codecs.FLAC
             if (info == null)
                 throw new ArgumentNullException("info");
 
-            Layer = (FlacLayer) info.GetValue("Layer", typeof (FlacLayer));
+            Data.Add("Layer", info.GetValue("Layer", typeof(FlacLayer)));
         }
 
         /// <summary>

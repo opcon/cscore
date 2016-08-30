@@ -24,13 +24,25 @@ namespace CSCore
         /// <summary>
         ///     Gets the <see cref="MmResult" /> which describes the error.
         /// </summary>
-        public MmResult Result { get; private set; }
+        public MmResult Result 
+        {
+            get
+            {
+                return this.Data["Result"] as MmResult;
+            }
+        }
 
         /// <summary>
         ///     Gets the name of the function which caused the error.
         /// </summary>
         [Obsolete("Use the Function property instead.")]
-        public string Target { get; private set; }
+        public string Target
+        {
+            get
+            {
+                return this.Data["Function"] as string;
+            }
+        }
 
         /// <summary>
         ///     Gets the name of the function which caused the error.
@@ -49,10 +61,8 @@ namespace CSCore
         /// <param name="function">Name of the function which returned the specified <paramref name="result" />.</param>
         public MmException(MmResult result, string function)
         {
-            Result = result;
-#pragma warning disable 618
-            Target = function;
-#pragma warning restore 618
+            Data.Add("Result", result);
+            Data.Add("Function", function);
         }
 
         /// <summary>
@@ -65,10 +75,8 @@ namespace CSCore
         {
             if (info == null)
                 throw new ArgumentNullException("info");
-#pragma warning disable 618
-            Target = info.GetString("Target");
-#pragma warning restore 618
-            Result = (MmResult) info.GetInt32("Result");
+            Data.Add("Function", info.GetString("Target"));
+            Data.Add("Result", (MmResult)info.GetInt32("Result"));
         }
 
         /// <summary>
@@ -79,9 +87,7 @@ namespace CSCore
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-#pragma warning disable 618
-            info.AddValue("Target", Target);
-#pragma warning restore 618
+            info.AddValue("Target", Function);
             info.AddValue("Result", (int) Result);
         }
     }
