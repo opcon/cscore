@@ -45,7 +45,7 @@ namespace Recorder
 
             using (var deviceEnumerator = new MMDeviceEnumerator())
             using (var deviceCollection = deviceEnumerator.EnumAudioEndpoints(
-                CaptureMode == CaptureMode.Capture ? DataFlow.Capture : DataFlow.Render, DeviceState.Active))
+                CaptureMode == Recorder.CaptureMode.Capture ? DataFlow.Capture : DataFlow.Render, DeviceState.Active))
             {
                 foreach (var device in deviceCollection)
                 {
@@ -65,7 +65,7 @@ namespace Recorder
             if (SelectedDevice == null)
                 return;
 
-            if(CaptureMode == CaptureMode.Capture)
+            if(CaptureMode == Recorder.CaptureMode.Capture)
                 _soundIn = new WasapiCapture();
             else
                 _soundIn = new WasapiLoopbackCapture();
