@@ -28,7 +28,7 @@ namespace CSCore
         {
             get
             {
-                return this.Data["Result"] as MmResult;
+                return (MmResult)Data["Result"];
             }
         }
 
@@ -40,7 +40,7 @@ namespace CSCore
         {
             get
             {
-                return this.Data["Function"] as string;
+                return Data["Function"] as string;
             }
         }
 
