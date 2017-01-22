@@ -77,7 +77,7 @@
         cd $(TargetDir)
         monolinker -c skip -b true -l none -p link MonoMac -p skip CSCore -o ../linked-output/$(ConfigurationName) -a CSCore.OSX.dll
         cd ../linked-output/$(ConfigurationName)
-        mono $(SolutionDir)/packages/ILRepack.2.0.10/tools/ILRepack.exe /out:../../merged-output/$(ConfigurationName)/$(TargetFileName) $(TargetFile) MonoMac.dll 
+        mono $(ProjectDir)../packages/ILRepack.2.0.10/tools/ILRepack.exe /out:../../merged-output/$(ConfigurationName)/$(TargetFileName) $(TargetFile) MonoMac.dll 
         cp $(TargetDir)/CSCore.OSX.xml $(TargetDir)/../merged-output/$(ConfigurationName)/
         rm -r $(TargetDir)
         mkdir $(TargetDir)
