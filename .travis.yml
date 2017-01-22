@@ -1,0 +1,10 @@
+language: csharp
+os:
+    - linux
+    - osx
+env:
+    - CONFIGURATION=Release
+    - CONFIGURATION=Debug
+install:
+    - nuget restore CSCore.sln
+script: xbuild /p:Configuration=$CONFIGURATION CSCore.OSX/CSCore.OSX.csproj
