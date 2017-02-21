@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using CSCore.OSXCoreAudio;
-using MonoMac.AudioToolbox;
+using AudioToolbox;
 namespace CSCore.Codecs.AAC
 {
     /// <summary>

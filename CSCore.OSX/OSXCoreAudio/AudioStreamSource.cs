@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using MonoMac.AudioToolbox;
+using AudioToolbox;
 
 namespace CSCore.OSXCoreAudio
 {
     /// <summary>
-    ///     An class derived from <see cref="MonoMac.AudioToolbox.AudioSource"/> that supports reading from streams.
+    ///     An class derived from <see cref="AudioToolbox.AudioSource"/> that supports reading from streams.
     ///     Can be wrapped by an ExtFileAudio object
     /// </summary>
     public class AudioStreamSource : AudioSource

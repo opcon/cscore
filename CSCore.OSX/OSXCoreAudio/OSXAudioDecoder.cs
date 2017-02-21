@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MonoMac.AudioToolbox;
-using MonoMac.AudioUnit;
+using AudioToolbox;
+using AudioUnit;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -185,7 +185,7 @@ namespace CSCore.OSXCoreAudio
         private ExtAudioFile Initialize(string url)
         {
             //Load the audio file
-            ExtAudioFile extAudioFile = ExtAudioFile.OpenUrl(MonoMac.CoreFoundation.CFUrl.FromFile(url));
+            ExtAudioFile extAudioFile = ExtAudioFile.OpenUrl(CoreFoundation.CFUrl.FromFile(url));
 
             //Initialize
             return Initialize(extAudioFile);
