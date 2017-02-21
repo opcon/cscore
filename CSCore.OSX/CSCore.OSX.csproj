@@ -79,12 +79,4 @@
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">
-		  $(SolutionDir)/packages/ILRepack.2.0.10/tools/ILRepack.exe /out:../merged-output/$(ConfigurationName)/$(TargetFileName) $(TargetPath) Xamarin.Mac.dll
-      copy "$(TargetDir)/CSCore.OSX.xml" "$(TargetDir)/../merged-output/$(ConfigurationName)/"
-      del /S /Q "$(TargetDir)/"
-      copy "$(TargetDir)..\merged-output\$(ConfigurationName)\*.*" "$(TargetDir)"
-	</PostBuildEvent>
-  </PropertyGroup>
 </Project>
