@@ -200,8 +200,8 @@ namespace CSCore.SoundOut.AL
             public void Dispose()
             {
                 _lockLevel--;
-                if (_lockLevel == 0 && ResetContext)
-                    ALInterops.alcMakeContextCurrent(IntPtr.Zero);
+                //if (_lockLevel == 0 && ResetContext)
+                //    ALInterops.alcMakeContextCurrent(IntPtr.Zero);
                 Monitor.Exit(ContextLockObj);
             }
         }
