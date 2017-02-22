@@ -243,9 +243,10 @@ namespace CSCore.OSXCoreAudio
                     AudioConverterPrimeInfo primeInfo = ac.PrimeInfo;
                     _headerFrames = ac.PrimeInfo.LeadingFrames;
                 }
-                catch (ArgumentException)
+                catch (Exception)
                 {
                 }
+
 
                 Debug.WriteLine("Initial audio file position is: " + extAudioFile.FileTell());
                 Debug.WriteLine("Header frames are: " + _headerFrames);
@@ -382,27 +383,49 @@ namespace CSCore.OSXCoreAudio
 
         private void DisposeInternal()
         {
-            if (_audioFileReader != null)
+            // We wrap the following dispose calls in try/catch and swallow any exceptions
+            // This is to prevent issues with the underlying audio file api in OSX
+            // Probably due to some fragility in the way we're wrapping it.
+            // Either way, dispose/finalize shouldn't throw any exceptions
+            try
             {
-                _audioFileReader.Dispose();
-                _audioFileReader = null;
-            }
-            if (_audioStreamSource != null)
-            {
-                if (_audioStreamSource.AudioStream != null)
-                    _audioStreamSource.AudioStream.Dispose();
-                _audioStreamSource = null;
-            }
-            if (_fillBuffers != null)
-            {
-                for (int i = 0; i < _fillBuffers.Count; i++)
+                if (_audioFileReader != null)
                 {
-                    AudioBuffer buf = _fillBuffers[i];
-                    Marshal.FreeHGlobal(buf.Data);
+                    _audioFileReader.Dispose();
+                    _audioFileReader = null;
                 }
-                _fillBuffers.Dispose();
-                _fillBuffers = null;
             }
+            catch (Exception) {}
+
+            try
+            {
+                if (_audioStreamSource != null)
+                {
+                    if (_audioStreamSource.AudioStream != null)
+                        _audioStreamSource.AudioStream.Dispose();
+                    _audioStreamSource = null;
+                }
+            }
+            catch (Exception) {}
+
+            try
+            {
+                if (_fillBuffers != null)
+                {
+                    for (int i = 0; i < _fillBuffers.Count; i++)
+                    {
+                        AudioBuffer buf = _fillBuffers[i];
+                        Marshal.FreeHGlobal(buf.Data);
+                    }
+                    _fillBuffers.Dispose();
+                    _fillBuffers = null;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         /// <summary>

@@ -11,8 +11,4 @@
     <description>$description$</description>
     <copyright>Copyright 2016</copyright>
   </metadata>
-  <files>
-      <file src="bin\**\CSCore.OSX.dll" target="lib" />
-      <file src="bin\**\Xamarin.Mac.dll" target="lib" />
-  </files>
 </package>
