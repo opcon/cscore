@@ -67,9 +67,12 @@ namespace CSCore.OSXCoreAudio
             MemoryStream memoryStream = new MemoryStream();
             WebRequest req = WebRequest.Create(uri);
 
-            using (Stream rStream = req.GetResponse().GetResponseStream())
+            using (WebResponse resp = req.GetResponse())
             {
-                rStream.CopyTo(memoryStream);
+                using (Stream rStream = resp.GetResponseStream())
+                {
+                    rStream.CopyTo(memoryStream);
+                } 
             }
 
             _audioFileReader = Initialize(memoryStream, fileType);
